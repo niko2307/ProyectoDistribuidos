@@ -11,47 +11,19 @@ import java.util.Scanner;
 public class Sistema_Edge {
     public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);;
-
-        String direccion = "tcp://10.43.101.19:5555";
+        System.out.println("Sistema Edge inicializado");
+        String direccion = "tcp://localhost:5555";
 
         List<Humo> sensoresHumo = new ArrayList<>();
         List<Temperatura> sensoresTemperatura = new ArrayList<>();
         List<Humedad> sensoresHumedad = new ArrayList<>();
+        String confHumo = "C:/Users/ANA MARIA/OneDrive/Escritorio/Samuel/Sistemas distribuidos/Proyecto/ProyectoDistribuidos/src/main/java/org/Edge_Computing/Sensor/humo.txt";
+        String confTemp = "C:/Users/ANA MARIA/OneDrive/Escritorio/Samuel/Sistemas distribuidos/Proyecto/ProyectoDistribuidos/src/main/java/org/Edge_Computing/Sensor/temperatura.txt";
+        String confHumedad = "C:/Users/ANA MARIA/OneDrive/Escritorio/Samuel/Sistemas distribuidos/Proyecto/ProyectoDistribuidos/src/main/java/org/Edge_Computing/Sensor/humedad.txt";
 
-        System.out.print("Ingrese el nombre del archivo de configuración de los sensores de Humo: ");
-        String confHumo = scanner.nextLine();
-        System.out.print("Ingrese el nombre del archivo de configuración de los sensores de Humedad: ");
-        String confHumedad = scanner.nextLine();
-        System.out.print("Ingrese el nombre del archivo de configuración de los sensores de Temperatura: ");
-        String confTemp = scanner.nextLine();
-        String opc;
-        do {
-            System.out.print("Como desea inicializar los sensores?");
-            System.out.print("1) Cantidad Predeterminada");
-            System.out.print("2) Cantidad Personalizada");
-            opc = scanner.nextLine();
-            switch (opc) {
-                case "1":
-                    crearSensoresHumo(10, confHumo, direccion, sensoresHumo);
-                    crearSensoresTemperatura(10, confTemp, direccion, sensoresTemperatura);
-                    crearSensoresHumedad(10, confHumedad, direccion, sensoresHumedad);
-                    break;
-                case "2":
-                    System.out.print("Ingrese la cantidad de sensores de Humo: ");
-                    int cantHumo = scanner.nextInt();
-                    System.out.print("Ingrese la cantidad de sensores de Humedad: ");
-                    int cantHumedad = scanner.nextInt();
-                    System.out.print("Ingrese la cantidad de sensores de Temperatura: ");
-                    int cantTemp = scanner.nextInt();
-                    crearSensoresHumo(cantHumo, confHumo, direccion, sensoresHumo);
-                    crearSensoresTemperatura(cantTemp, confTemp, direccion, sensoresTemperatura);
-                    crearSensoresHumedad(cantHumedad, confHumedad, direccion, sensoresHumedad);
-                    break;
-                default:
-                    System.out.println("Opción inválida. Por favor, ingrese una opción válida.");
-                    break;
-            }
-        } while (!opc.equals("1") && !opc.equals("2"));
+        crearSensoresHumo(10, confHumo, direccion, sensoresHumo);
+        crearSensoresTemperatura(10, confTemp, direccion, sensoresTemperatura);
+        crearSensoresHumedad(10, confHumedad, direccion, sensoresHumedad);
 
 
         Thread.currentThread().join();

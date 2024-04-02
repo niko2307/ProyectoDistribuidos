@@ -38,7 +38,14 @@ public class Proxy {
             Map<String, String> paquete = deserialize(mensajeSensor);
             tipo = paquete.get("Tipo_Sensor");
             tiempo = paquete.get("Tiempo_mensaje");
-            dato = Double.valueOf(paquete.get("valor"));
+            String valorString = paquete.get("valor");
+            if (valorString != null) {
+                dato = Double.valueOf(valorString.trim());
+            } else {
+                // Manejar la situación cuando el valor es nulo
+                System.err.println("Error: el valor recibido es nulo");
+                continue; // Otra acción apropiada según tu lógica
+            }
             if(dato < 0){
                 System.out.println("Error en el sensor" + tipo + ", Al generar la medición" + dato);
 

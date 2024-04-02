@@ -33,9 +33,9 @@ public class Socket {
     private Map<String, Object> crearPaquete(String tipo, double valor, boolean alerta, LocalDateTime tiempo) {
         Map<String, Object> paquete = new HashMap<>();
         paquete.put("Tipo_Sensor", tipo);
-        paquete.put("Valor_datos", valor);
-        paquete.put("Alerta", alerta);
-        paquete.put("Tiempo_mensaje", tiempo.toString());
+        paquete.put("valor", String.valueOf(valor));
+        paquete.put("Alerta", String.valueOf(alerta));
+        paquete.put("Tiempo_mensaje", String.valueOf(tiempo));
         return paquete;
     }
 
