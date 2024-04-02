@@ -1,5 +1,6 @@
 package org.Edge_Computing.Sensor;
 
+import org.Edge_Computing.Actuador_Aspersor;
 import org.Edge_Computing.Socket;
 
 import java.io.BufferedReader;
@@ -11,10 +12,10 @@ public class Humo extends Thread {
 
     private final String tipo;
     private final String config;
-    private double medicion;
+    private int medicion;
     private final Socket socket;
 
-    public Humo(String tipo, String config, Socket socket, Socket socket1) {
+    public Humo(String tipo, String config, Actuador_Aspersor socket, Socket socket1) {
         this.tipo = tipo;
         this.config = config;
         this.socket = socket1;
@@ -26,11 +27,15 @@ public class Humo extends Thread {
         while (true) {
             try {
                 Thread.sleep(3000);
-                medicion = generarMediciones(probabilidades[0], probabilidades[1]);
+                medicion = generarMediciones(probabilidades[0], probabilidades[1]) ? 1 : 0;
                 LocalDateTime hora = LocalDateTime.now();
-                socket.enviarMensaje(tipo, medicion, false, hora);
+
                 if (medicion == 1) {
-                    System.out.println("Error:Rango de temperatura por fuera de los parametros de calidad " + medicion);
+                    //Se debe activar el aspersor porque hay humo
+                    System.out.println("Alerta: Humo presente " + medicion);
+                    socket.enviarMensaje(tipo, medicion, true, hora);
+                } else if (medicion ==0) {
+                    socket.enviarMensaje(tipo, medicion, false, hora);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -38,23 +43,19 @@ public class Humo extends Thread {
         }
     }
 
-    public double getValor() {
+    public int getValor() {
         return medicion;
     }
 
-    private double generarMediciones(double probabilidadRangoValido, double probabilidadRangoInvalido) {
+    private boolean generarMediciones(double probHumoP, double probHumoA) {
 
-        double valorAleatorio = Math.random();
-        if (valorAleatorio < probabilidadRangoValido) {
-            return Math.random() * (29.4 - 11) + 11;
-        } else if (valorAleatorio < (probabilidadRangoValido + probabilidadRangoInvalido)) {
-            double n;
-            do{
-                n = Math.random() * (40 - 0) + 0;
-            } while(n >= 11 && n <= 29.4);
-            return n;
+        double valor = Math.random();
+        if (valor < probHumoP) {
+            return true;
+        } else if (valor < (probHumoP + probHumoA)) {
+            return false;
         } else {
-            return -1;
+            return false;
         }
     }
 

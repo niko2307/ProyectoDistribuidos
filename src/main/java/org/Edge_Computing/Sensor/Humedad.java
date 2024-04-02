@@ -1,5 +1,6 @@
 package org.Edge_Computing.Sensor;
 
+import org.Edge_Computing.Actuador_Aspersor;
 import org.Edge_Computing.Socket;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ public class Humedad extends Thread {
     private double medicion;
     private final Socket socket;
 
-    public Humedad(String tipo, String config, Socket socket, Socket socket1) {
+    public Humedad(String tipo, String config, Actuador_Aspersor socket, Socket socket1) {
         this.tipo = tipo;
         this.config = config;
         this.socket = socket1;
@@ -42,13 +43,13 @@ public class Humedad extends Thread {
         return medicion;
     }
 
-    private double generarMediciones(double probabilidadRangoValido, double probabilidadRangoInvalido) {
+    private double generarMediciones(double probHumedadV, double probHumedadI) {
 
-        double valorAleatorio = Math.random();
+        double valor = Math.random();
 
-        if (valorAleatorio < probabilidadRangoValido) {
+        if (valor < probHumedadV) {
             return Math.random() * (100 - 70) + 70;
-        } else if (valorAleatorio < (probabilidadRangoValido + probabilidadRangoInvalido)) {
+        } else if (valor < (probHumedadV + probHumedadI)) {
             return  Math.random() * (69 - 0) + 0;
 
         } else {

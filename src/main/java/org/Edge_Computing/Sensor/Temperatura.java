@@ -1,5 +1,6 @@
 package org.Edge_Computing.Sensor;
 
+import org.Edge_Computing.Actuador_Aspersor;
 import org.Edge_Computing.Socket;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ public class Temperatura extends Thread {
     private double medicion;
     private final Socket socket;
 
-    public Temperatura(String tipo, String config, Socket socket, Socket socket1) {
+    public Temperatura(String tipo, String config, Actuador_Aspersor socket, Socket socket1) {
         this.tipo = tipo;
         this.config = config;
         this.socket = socket1;
@@ -42,17 +43,17 @@ public class Temperatura extends Thread {
         return medicion;
     }
 
-    private double generarMediciones(double probabilidadRangoValido, double probabilidadRangoInvalido) {
+    private double generarMediciones(double probTemperaturaV, double probTemperaturaI) {
 
-        double valorAleatorio = Math.random();
-        if (valorAleatorio < probabilidadRangoValido) {
+        double valor = Math.random();
+        if (valor < probTemperaturaV) {
             return Math.random() * (29.4 - 11) + 11;
-        } else if (valorAleatorio < (probabilidadRangoValido + probabilidadRangoInvalido)) {
-            double n;
+        } else if (valor < (probTemperaturaV + probTemperaturaI)) {
+            double valor2;
             do{
-                n = Math.random() * (40 - 0) + 0;
-            } while(n >= 11 && n <= 29.4);
-            return n;
+                valor2 = Math.random() * (40 - 0) + 0;
+            } while(valor2 >= 11 && valor2 <= 29.4);
+            return valor2;
         } else {
             return -1;
         }
