@@ -14,6 +14,7 @@ public class Sistema_Edge {
         System.out.println("Sistema Edge inicializado");
         String direccion = "tcp://localhost:5555";
 
+        
         List<Humo> sensoresHumo = new ArrayList<>();
         List<Temperatura> sensoresTemperatura = new ArrayList<>();
         List<Humedad> sensoresHumedad = new ArrayList<>();
